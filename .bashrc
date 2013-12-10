@@ -34,3 +34,7 @@ alias plz="foreman run bundle exec "
 
 # sublime
 alias sublime="open -a /Applications/Sublime\ Text\ 2.app "
+
+function ref {
+  open http://www.omniref.com/?q="$*"
+}
