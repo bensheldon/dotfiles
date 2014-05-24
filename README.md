@@ -10,7 +10,21 @@ Applications
 
 ### Sublime Text
 
-`ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime`
+```
+{
+	"auto_indent": true,
+	"ensure_newline_at_eof_on_save": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"tab_size": 2,
+	"trailing_spaces_highlight_color": "comment",
+	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": true,
+	"trim_trailing_white_space_on_save": true
+}
+```
 
 ### iTerm 2
 
