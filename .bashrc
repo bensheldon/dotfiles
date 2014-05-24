@@ -33,7 +33,7 @@ export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
 alias plz="foreman run bundle exec "
 
 # sublime
-alias sublime="open -a /Applications/Sublime\ Text\ 2.app "
+alias sublime="open -a /Applications/Sublime\ Text.app "
 
 function ref {
   open http://www.omniref.com/?q="$*"
