@@ -38,3 +38,15 @@ alias sublime="open -a /Applications/Sublime\ Text.app "
 function ref {
   open http://www.omniref.com/?q="$*"
 }
+
+# Onebox
+alias mount-onebox="mkdir /Volumes/Onebox; sshfs root@onebox:/ /Volumes/Onebox -olocal,auto_cache,reconnect,defer_permissions,noappledouble,volname=Onebox; echo 'Pantheon Onebox Mounted 🎉'"
+alias umount-onebox="umount /Volumes/Onebox; echo 'Pantheon Onebox Unmounted 👾'"
+
+# added by travis gem
+[ -f /Users/bensheldon/.travis/travis.sh ] && source /Users/bensheldon/.travis/travis.sh
+
+# Get the Pull Request for a given GITHUB_UPSTREAM= 
+function pr_for_sha {
+  git log --merges --ancestry-path --oneline $1..master | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2- | xargs -I % open https://github.com/$GITHUB_UPSTREAM/${PWD##*/}/pull/%
+}
