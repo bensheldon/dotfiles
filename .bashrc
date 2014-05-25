@@ -2,8 +2,8 @@
 # Reload after changes: source ~/.bashrc
 #
 
-# rbenv
-eval "$(rbenv init -)"
+# chruby
+source /usr/local/opt/chruby/share/chruby/chruby.sh
 
 # python virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
