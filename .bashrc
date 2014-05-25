@@ -4,6 +4,7 @@
 
 # chruby
 source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 
 # python virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
