@@ -8,6 +8,10 @@ Dotfiles
 Applications
 ------------
 
+### SSH
+
+Don't forget to add all the custom keys with `$ ssh-add -K path/to/my_key`
+
 ### Sublime Text
 
 ```
