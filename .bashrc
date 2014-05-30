@@ -5,11 +5,18 @@
 # chruby
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
+chruby 2.1.1
 
-# python virtualenvwrapper
+# ruby-build
+RUBY_BUILD_CACHE_PATH=$HOME/.rubies/cache
+
+# Python virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Workspace
 source /usr/local/bin/virtualenvwrapper.sh
+
+# NVM
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
 
 # pear
 export PATH="/users/bensheldon/.pear/bin:$PATH"
@@ -19,6 +26,10 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # Heroku
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# Postgres.app
+export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
+export PGHOST=/tmp
 
 # Cairo (for `npm install node-canvas`)
 export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
