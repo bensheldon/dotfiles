@@ -31,6 +31,11 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 export PGHOST=/tmp
 
+# Git Autocompletion
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 # Cairo (for `npm install node-canvas`)
 export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
 #export PKG_CONFIG_PATH="/lib/pkgconfig:/usr/local/opt/pixman/lib/pkgconfig:/usr/local/opt/fontconfig/lib/pkgconfig:/usr/local/opt/freetype/lib/pkgconfig:/usr/local/opt/libpng/lib/pkgconfig:/usr/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -43,6 +48,9 @@ export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # multitool
 alias plz="foreman run bundle exec "
+
+# better ls
+alias ll='ls -lGa'
 
 # sublime
 alias sublime="open -a /Applications/Sublime\ Text.app "
@@ -58,7 +66,7 @@ alias umount-onebox="umount /Volumes/Onebox; echo 'Pantheon Onebox Unmounted ðŸ‘
 # added by travis gem
 [ -f /Users/bensheldon/.travis/travis.sh ] && source /Users/bensheldon/.travis/travis.sh
 
-# Get the Pull Request for a given GITHUB_UPSTREAM= 
+# Get the Pull Request for a given GITHUB_UPSTREAM=
 function pr_for_sha {
   git log --merges --ancestry-path --oneline $1..master | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2- | xargs -I % open https://github.com/$GITHUB_UPSTREAM/${PWD##*/}/pull/%
 }
