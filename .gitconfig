@@ -1,7 +1,7 @@
 [core]
 	excludesfile = /Users/bensheldon/.gitignore_global
 	quotepath = false
-	editor = sublime -n -w
+	editor = vim
 [alias]
 	st = status
 	di = diff
