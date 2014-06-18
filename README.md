@@ -12,6 +12,13 @@ Applications
 
 Don't forget to add all the custom keys with `$ ssh-add -K path/to/my_key`
 
+Add this to `~/.ssh/config` to improve timeout behavior and prevent frozen consoles:
+
+```
+ServerAliveInterval 30
+ServerAliveCountMax 4
+```
+
 ### Sublime Text
 
 ```
