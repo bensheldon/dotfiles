@@ -55,6 +55,9 @@ alias ll='ls -lGa'
 # sublime
 alias sublime="open -a /Applications/Sublime\ Text.app "
 
+# Remove merged git branches
+alias git_prune='git checkout master && git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d && git remote prune origin'
+
 function ref {
   open http://www.omniref.com/?q="$*"
 }
