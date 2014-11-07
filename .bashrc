@@ -28,7 +28,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Postgres.app
-export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin"
 export PGHOST=/tmp
 
 # Git Autocompletion
