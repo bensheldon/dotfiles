@@ -31,16 +31,12 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin"
 export PGHOST=/tmp
 
-# Git Autocompletion
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
-
+# brew install git bash-completion
 if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+  . `brew --prefix`/etc/bash_completion
 fi
 
-# for use in the prompt later
+# Add git branch to command prompt
 git_branch () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
