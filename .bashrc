@@ -60,7 +60,14 @@ export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
 ###############
 
 # multitool
-alias plz="foreman run bundle exec "
+function plz () {
+  if [ -f Gemfile ]; then
+    foreman run bundle exec $@
+  else
+    foreman run $@
+  fi
+}
+alias plz=plz
 
 # better ls
 alias ll='ls -lGa'
