@@ -28,7 +28,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Postgres.app
-export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin"
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 export PGHOST=/tmp
 
 # brew install git bash-completion
