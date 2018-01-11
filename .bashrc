@@ -5,35 +5,30 @@
 # chruby
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-chruby 2.1.1
+chruby 2.4.2
 
-# ruby-build
-RUBY_BUILD_CACHE_PATH=$HOME/.rubies/cache
+export EDITOR=atom
 
-# Python virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Workspace
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
+# # Python virtualenvwrapper
+# export WORKON_HOME=$HOME/.virtualenvs
+# export PROJECT_HOME=$HOME/Workspace
+# [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
+#
+# # NVM
+# export NVM_DIR="$HOME/.nvm"
+# . "$(brew --prefix nvm)/nvm.sh"
 
-# NVM
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
-
-# pear
-export PATH="/users/bensheldon/.pear/bin:$PATH"
 
 # Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# Heroku
-export PATH="/usr/local/heroku/bin:$PATH"
-
 # Postgres.app
-export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:${PATH}"
 export PGHOST=/tmp
 
-# brew install git bash-completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
+# $ brew install git bash-completion | https://github.com/OpenSC/OpenSC/issues/782
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # Add git branch to command prompt
@@ -72,19 +67,17 @@ alias plz=plz
 # better ls
 alias ll='ls -lGa'
 
+# find processes binding on port 3000
+alias railshunt="lsof -wni tcp:3000"
+
 # sublime
 alias sublime="open -a /Applications/Sublime\ Text.app "
 
-# Remove merged git branches
 alias git_prune='git checkout master && git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d && git remote prune origin'
 
 function ref {
   open http://www.omniref.com/?q="$*"
 }
-
-# Onebox
-alias mount-onebox="mkdir /Volumes/Onebox; sshfs root@onebox:/ /Volumes/Onebox -olocal,auto_cache,reconnect,defer_permissions,noappledouble,volname=Onebox; echo 'Pantheon Onebox Mounted 🎉'"
-alias umount-onebox="umount /Volumes/Onebox; echo 'Pantheon Onebox Unmounted 👾'"
 
 # added by travis gem
 [ -f /Users/bensheldon/.travis/travis.sh ] && source /Users/bensheldon/.travis/travis.sh
