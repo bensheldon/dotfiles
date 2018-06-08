@@ -1,3 +1,6 @@
 brew "git"
-cask "homebrew/cask/iterm2" 
+brew "bash-completion"
+brew "rbenv"
+cask "homebrew/cask/iterm2"
 cask "homebrew/cask/atom"
+cask "homebrew/cask/slack"
