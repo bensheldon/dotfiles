@@ -4,3 +4,7 @@ brew "rbenv"
 cask "homebrew/cask/iterm2"
 cask "homebrew/cask/atom"
 cask "homebrew/cask/slack"
+cask "homebrew/cask/1password"
+cask "homebrew/cask/evernote"
+cask "homebrew/cask/hazel"
+cask "postgres" # https://postgresapp.com/
