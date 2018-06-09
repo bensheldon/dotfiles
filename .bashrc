@@ -7,6 +7,9 @@
 # source /usr/local/share/chruby/auto.sh
 # chruby 2.4.2
 
+# rbenv
+eval "$(rbenv init -)"
+
 export EDITOR=atom
 
 # # Python virtualenvwrapper
