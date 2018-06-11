@@ -1,13 +1,26 @@
-brew "git"
+tap "homebrew/core"
+tap "homebrew/cask"
+tap "homebrew/bundle"
 brew "bash-completion"
-brew "rbenv"
+brew "git"
+brew "imagemagick"
 brew "mas"
-cask "homebrew/cask/iterm2"
-cask "homebrew/cask/atom"
-cask "homebrew/cask/slack"
-cask "homebrew/cask/1password"
-cask "homebrew/cask/evernote"
-cask "homebrew/cask/hazel"
-cask "homebrew/cask/dropbox"
-cask "homebrew/cask/tower"
-cask "postgres" # https://postgresapp.com/
+brew "rbenv"
+cask "1password"
+cask "atom"
+cask "chromedriver"
+cask "dropbox"
+cask "evernote"
+cask "hazel"
+cask "iterm2"
+cask "postgres"
+cask "rubymine"
+cask "sketch"
+cask "slack"
+cask "tower"
+mas "Fantastical 2", id: 975937182
+mas "Magnet", id: 441258766
+mas "Spark", id: 1176895641
+mas "Tadam", id: 531349534
+mas "Things3", id: 904280696
+mas "Tweetbot", id: 1384080005
