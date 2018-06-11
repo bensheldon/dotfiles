@@ -1,10 +1,13 @@
 brew "git"
 brew "bash-completion"
 brew "rbenv"
+brew "mas"
 cask "homebrew/cask/iterm2"
 cask "homebrew/cask/atom"
 cask "homebrew/cask/slack"
 cask "homebrew/cask/1password"
 cask "homebrew/cask/evernote"
 cask "homebrew/cask/hazel"
+cask "homebrew/cask/dropbox"
+cask "homebrew/cask/tower"
 cask "postgres" # https://postgresapp.com/
