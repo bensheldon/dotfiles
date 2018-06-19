@@ -8,6 +8,7 @@ brew "mas"
 brew "rbenv"
 cask "1password"
 cask "atom"
+cask "calibre"
 cask "chromedriver"
 cask "dropbox"
 cask "evernote"
@@ -24,6 +25,8 @@ cask "slack"
 cask "tower"
 mas "Fantastical 2", id: 975937182
 mas "Magnet", id: 441258766
+mas "Pixelmator", id: 407963104
+mas "Reeder", id: 880001334
 mas "Spark", id: 1176895641
 mas "Tadam", id: 531349534
 mas "Things3", id: 904280696
