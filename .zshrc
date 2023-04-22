@@ -29,6 +29,10 @@ eval "$(rbenv init -)"
 # Rake
 alias rake='noglob rake'
 
+# Rubymine made the launcher bad: https://youtrack.jetbrains.com/issue/IDEA-318134/
+export PATH="/Applications/RubyMine.app/Contents/MacOS:$PATH"
+alias mine='rubymine &> /dev/null'
+
 export EDITOR="code -w"
 
 # # Python virtualenvwrapper
