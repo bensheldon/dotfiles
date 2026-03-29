@@ -17,11 +17,6 @@ else
   path=($HOME/.local/share/mise/shims ${path:#*mise/shims*})
 fi
 
-# Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # RubyMine launcher workaround
 # https://youtrack.jetbrains.com/issue/IDEA-318134/
 function openRubyMine() {
