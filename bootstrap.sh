@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
-cd "$(dirname "${BASH_SOURCE}")"
-git pull origin master
+#!/usr/bin/env zsh
+cd "$(dirname "${(%):-%N}")"
+git pull origin main
 function doIt() {
         rsync --exclude ".git/" \
               --exclude ".DS_Store" \
@@ -9,7 +9,7 @@ function doIt() {
               --exclude "LICENSE-MIT.txt" \
               --exclude "Brewfile" \
               -av --no-perms . ~
-        source ~/.bash_profile
+        source ~/.zprofile
 }
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
         doIt
