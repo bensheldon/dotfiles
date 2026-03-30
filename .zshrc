@@ -58,6 +58,9 @@ autoload -Uz compinit && compinit
 setopt PROMPT_SUBST
 autoload -U colors && colors
 
+# Dotfiles bare repo alias
+alias dotfiles="/usr/bin/git --git-dir=\$HOME/.dotfiles.git --work-tree=\$HOME"
+
 # Aliases
 alias rake='noglob rake'
 alias ll='ls -lGa'
