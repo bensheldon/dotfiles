@@ -52,6 +52,22 @@ USE_BROWSER=1 bundle exec rdbg \
   -- bin/rspec spec/system/apply/solo_spec.rb:5
 ```
 
+#### Full-page and element screenshots
+
+If the app uses Cuprite (Chrome DevTools Protocol), `page.driver.browser.screenshot` is available with additional options. Use it instead of `page.save_screenshot` when you need more control:
+
+- **Full page** (captures the entire scrollable page, not just the viewport):
+  ```ruby
+  do: eval page.driver.browser.screenshot(path: "tmp/capybara/name.png", full: true)
+  ```
+
+- **Single element** (crops to a specific CSS selector):
+  ```ruby
+  do: eval page.driver.browser.screenshot(path: "tmp/capybara/name.png", selector: ".my-component")
+  ```
+
+Note: these require an explicit `tmp/capybara/` path prefix — Capybara does not prepend the save path automatically here.
+
 ### 4. Display the screenshots
 
 Use the Read tool on each file at `tmp/capybara/NAME.png` to display them inline. Always output the file path alongside a short description, e.g.:
