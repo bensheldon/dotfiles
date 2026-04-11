@@ -5,7 +5,7 @@
 [user]
 	name = Ben Sheldon [he/him]
 	email = bensheldon@gmail.com
-	signingkey = 60B3709887216344
+	signingkey = 9AC8A7DCA38EC7681249407560B3709887216344
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
@@ -18,3 +18,5 @@
 	default = current
 [init]
 	defaultBranch = main
+[tag]
+	gpgSign = true
