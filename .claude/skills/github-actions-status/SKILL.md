@@ -54,9 +54,23 @@ gh api repos/OWNER/REPO/actions/artifacts/ARTIFACT_ID/zip > logs.zip
 unzip -o logs.zip
 ```
 
-## Triggering a new run
+## Re-running jobs
 
-When workflow_dispatch isn't available:
+Rerun failed jobs from a run:
 ```sh
-git commit --allow-empty -m "Trigger CI run" && git push origin LOCAL_BRANCH:REMOTE_BRANCH
+gh run rerun RUN_ID --repo OWNER/REPO --failed
+```
+
+Rerun the entire run:
+```sh
+gh run rerun RUN_ID --repo OWNER/REPO
+```
+
+Rerun a specific job (use databaseId, not the number from the URL):
+```sh
+# Get the correct job ID first
+gh run view RUN_ID --repo OWNER/REPO --json jobs --jq '.jobs[] | {name, databaseId}'
+
+# Then rerun it
+gh run rerun --repo OWNER/REPO --job JOB_DATABASE_ID
 ```
