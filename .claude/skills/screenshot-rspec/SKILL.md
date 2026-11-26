@@ -20,7 +20,9 @@ Search `spec/system/` for the relevant test file, and `spec/support/system/` for
 For each screenshot point, determine:
 
 - The line number (debugger breaks before the line executes)
-- A short descriptive name for the file, e.g. `before_upload`, `after_upload`
+- A short descriptive name for the file, e.g. `before_upload_v1`, `after_upload_v1`
+
+Always use a version suffix (e.g. `-v1`, `-v2`) in the filename to avoid browser/viewer caching across sessions.
 
 ### 3. Build and run the command
 
@@ -28,60 +30,60 @@ Always prepend `USE_BROWSER=1`. Use `bundle exec rdbg` with one `-e` flag per br
 
 ```bash
 USE_BROWSER=1 bundle exec rdbg \
-  -e 'break path/to/file.rb:LINE do: eval page.save_screenshot("name.png")' \
-  -e 'break path/to/file.rb:LINE2 do: eval page.save_screenshot("name2.png")' \
+  -e 'break path/to/file.rb:LINE do: eval page.save_screenshot("name_v1.png", full: true)' \
+  -e 'break path/to/file.rb:LINE2 do: eval page.save_screenshot("name2_v1.png", full: true)' \
   -e 'continue' \
   -- bin/rspec path/to/spec.rb:LINE_NUMBER
 ```
+
+**Always pass `full: true`** to `page.save_screenshot` to capture the entire scrollable page, not just the viewport.
 
 Run the **specific example** (not the whole file) to avoid unrelated screenshots.
 
 When an "after" screenshot depends on an async UI update, wait for a Capybara condition before saving:
 
 ```ruby
-do: eval (expect(page).to(have_button("Remove")); page.save_screenshot("after_upload.png"))
+do: eval (expect(page).to(have_button("Remove")); page.save_screenshot("after_upload_v1.png", full: true))
 ```
 
 **Example for the identity page:**
 
 ```bash
 USE_BROWSER=1 bundle exec rdbg \
-  -e 'break spec/support/system/apply_helpers.rb:46 do: eval page.save_screenshot("before_upload.png")' \
-  -e 'break spec/support/system/apply_helpers.rb:51 do: eval (expect(page).to(have_button("Remove")); page.save_screenshot("after_upload.png"))' \
+  -e 'break spec/support/system/apply_helpers.rb:46 do: eval page.save_screenshot("before_upload_v1.png", full: true)' \
+  -e 'break spec/support/system/apply_helpers.rb:51 do: eval (expect(page).to(have_button("Remove")); page.save_screenshot("after_upload_v1.png", full: true))' \
   -e 'continue' \
   -- bin/rspec spec/system/apply/solo_spec.rb:5
 ```
 
-#### Full-page and element screenshots
+#### Element screenshots
 
-If the app uses Cuprite (Chrome DevTools Protocol), `page.driver.browser.screenshot` is available with additional options. Use it instead of `page.save_screenshot` when you need more control:
+If you need to crop to a specific element, use the Cuprite driver method directly:
 
-- **Full page** (captures the entire scrollable page, not just the viewport):
-  ```ruby
-  do: eval page.driver.browser.screenshot(path: "tmp/capybara/name.png", full: true)
-  ```
+```ruby
+do: eval page.driver.browser.screenshot(path: "tmp/capybara/name_v1.png", selector: ".my-component")
+```
 
-- **Single element** (crops to a specific CSS selector):
-  ```ruby
-  do: eval page.driver.browser.screenshot(path: "tmp/capybara/name.png", selector: ".my-component")
-  ```
-
-Note: these require an explicit `tmp/capybara/` path prefix — Capybara does not prepend the save path automatically here.
+Note: the Cuprite driver method requires an explicit `tmp/capybara/` path prefix and does **not** support `full:` the same way. Prefer `page.save_screenshot(..., full: true)` for full-page shots as it works reliably in the debugger context.
 
 ### 4. Display the screenshots
 
 Use the Read tool on each file at `tmp/capybara/NAME.png` to display them inline. Always output the file path alongside a short description, e.g.:
 
-`tmp/capybara/before_upload.png` — Upload button, no file selected yet.
-`tmp/capybara/after_upload.png` — File uploaded, Remove button visible.
+`tmp/capybara/before_upload_v1.png` — Upload button, no file selected yet.
+`tmp/capybara/after_upload_v1.png` — File uploaded, Remove button visible.
 
 Do not use base64 inline images or markdown image syntax — use the Read tool only.
 
-Leave the screenshot files in `tmp/capybara/` after displaying them — do not delete them once the task appears done. The user may want to refer back to them later in the conversation (e.g. "show me that screenshot again"), and `tmp/capybara/` is already gitignored so they don't pollute the repo. Only clean up temporary spec files you created to generate the screenshots, not the screenshots themselves. If the user explicitly asks you to clean up the images, or a screenshot was clearly a failed/discarded attempt (wrong element, wrong state), it's fine to delete those specific files.
+### 5. Write durable tests
+
+After taking screenshots, write real system tests for the behavior you just verified visually. Do **not** leave temporary screenshot-only tests in the codebase. The durable tests should assert on page content (headings, key text) using the same sign-in flow, but without any screenshot calls.
 
 ## Notes
 
 - File paths in `-e` flags must be relative to `Rails.root`
 - The `do:` clause evaluates in the test's execution context so `page` and all Capybara helpers are available
+- The debugger breaks **before** the line executes — to capture state after an action, place the breakpoint on the line *following* that action
 - Do **not** use `RUBY_DEBUG_COMMANDS` env var or `-n`/`--nonstop`—use multiple `-e` flags with a final `-e 'continue'`
 - If `page.save_screenshot` fails, confirm `USE_BROWSER=1` is set (rack_test driver does not support screenshots). Check `spec/support/system/` for a configuration file that switches the Capybara driver based on this env var, e.g. `driven_by ENV["USE_BROWSER"] ? :selenium_chrome : :rack_test`
+- CSS `text-transform: uppercase` makes rendered text appear uppercase in the browser even when the source is mixed-case. Use case-insensitive regex (e.g. `/before the call/i`) in `have_content` assertions to avoid fragile matches
