@@ -1,5 +1,3 @@
-export LOADED=".zshrc($([[ -o interactive ]] && echo i || echo n)):$LOADED"
-
 # Editor
 export EDITOR="/Applications/RubyMine.app/Contents/MacOS/rubymine --edit --wait"
 
@@ -8,14 +6,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Mise: full activation only for real terminal programs. Tool calls are interactive so we can't use that.
-if [[ -n "$TERM_PROGRAM" ]]; then
-  eval "$(/opt/homebrew/bin/mise activate zsh)"
-else
-  # Force prepend mise shims to PATH and remove any existing mise entries to prevent duplicates
-  path=($HOME/.local/share/mise/shims ${path:#*mise/shims*})
-fi
 
 # RubyMine launcher workaround
 # https://youtrack.jetbrains.com/issue/IDEA-318134/
@@ -39,21 +29,25 @@ alias mine=openRubyMine
 
 # PATH additions
 export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:${PATH}"
 export PGHOST=/tmp
+export PATH="$PATH:$HOME/.docker/bin" # Docker Desktop
+export PATH="$HOME/.local/bin:$PATH" # sentry
 
-# Android Studio
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# Mise (after PATH additions so its tools win). Agent tool shells (e.g. Claude Code)
+# never draw a prompt, so `mise activate` hooks don't fire there; use shims instead.
+if [[ -n "$CLAUDECODE" || -z "$TERM_PROGRAM" ]]; then
+  # Prepend shims, removing any existing entries to prevent duplicates
+  path=($HOME/.local/share/mise/shims ${path:#*mise/shims*})
+else
+  eval "$(mise activate zsh)"
+fi
+
+# Allow # inline comments
+setopt interactivecomments
 
 # Completions
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-fi
+FPATH=$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH
 autoload -Uz compinit && compinit
 setopt PROMPT_SUBST
 autoload -U colors && colors
@@ -65,8 +59,15 @@ alias dotfiles="/usr/bin/git --git-dir=\$HOME/.dotfiles.git --work-tree=\$HOME"
 alias rake='noglob rake'
 alias ll='ls -lGa'
 alias railshunt="lsof -wni tcp:3000"
-alias git_prune='git checkout master && git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d && git remote prune origin'
 alias killruby="ps -e | grep ruby | grep -v grep | awk '{print \$1}' | xargs kill"
+
+# Delete local branches merged into the default branch (or the one given)
+function git_prune() {
+  local base=${1:-$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)}
+  base=${base#origin/}; base=${base:-main}
+  git checkout "$base" && git branch --merged "$base" | grep -vE "^[*+]|^ +$base\$" | xargs -n 1 git branch -d
+  git remote prune origin
+}
 
 function plz () {
   if [ -f Gemfile ]; then
@@ -82,3 +83,6 @@ function killitall {
 
 # Starship Terminal Prompt: https://starship.rs/
 eval "$(starship init zsh)"
+
+# Machine-specific config (untracked)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

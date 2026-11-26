@@ -16,3 +16,10 @@ TAGS
 !TAGS/
 tags
 !tags/
+
+# AI Tools
+**/.claude/settings.local.json
+**/.conductor/settings.local.toml
+
+**/.claude/.cc-writes/
+CLAUDE.local.md

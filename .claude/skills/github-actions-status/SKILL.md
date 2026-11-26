@@ -43,13 +43,16 @@ gh run view RUN_ID --repo OWNER/REPO --job JOB_ID --log 2>&1 | grep -E "FAILED|e
 
 ## Downloading log artifacts
 
-Artifacts (like Rails test.log) contain more detail than CI stdout:
+Artifacts (like Rails test.log) contain more detail than CI stdout. On failure, this repo uploads a `rails-logs` artifact with the full `log/` directory:
 ```sh
 # List artifacts
 gh api repos/OWNER/REPO/actions/runs/RUN_ID/artifacts \
   --jq '.artifacts[] | "\(.id) \(.name)"'
 
-# Download and extract
+# Download by artifact name (simpler)
+gh run download RUN_ID --repo OWNER/REPO --name rails-logs --dir rails-logs/
+
+# Or download by artifact ID
 gh api repos/OWNER/REPO/actions/artifacts/ARTIFACT_ID/zip > logs.zip
 unzip -o logs.zip
 ```

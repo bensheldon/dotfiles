@@ -77,6 +77,8 @@ Use the Read tool on each file at `tmp/capybara/NAME.png` to display them inline
 
 Do not use base64 inline images or markdown image syntax — use the Read tool only.
 
+Leave the screenshot files in `tmp/capybara/` after displaying them — do not delete them once the task appears done. The user may want to refer back to them later in the conversation (e.g. "show me that screenshot again"), and `tmp/capybara/` is already gitignored so they don't pollute the repo. Only clean up temporary spec files you created to generate the screenshots, not the screenshots themselves. If the user explicitly asks you to clean up the images, or a screenshot was clearly a failed/discarded attempt (wrong element, wrong state), it's fine to delete those specific files.
+
 ## Notes
 
 - File paths in `-e` flags must be relative to `Rails.root`

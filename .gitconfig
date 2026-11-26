@@ -20,3 +20,22 @@
 	defaultBranch = main
 [tag]
 	gpgSign = true
+[alias]
+	; fetches origin's branch (default: main) straight into the local ref of the same name,
+	; without checking it out -- lets you update main from another branch or worktree.
+	; --update-head-ok allows this even if that branch is checked out elsewhere; still
+	; fast-forward-only, so it safely refuses (instead of discarding) if local commits
+	; have diverged from origin. note: if checked out elsewhere, that worktree's files
+	; won't reflect the update until you pull/reset there
+	fm = "!f() { git fetch --update-head-ok origin ${1:-main}:${1:-main}; }; f"
+	fom = !git fetch upstream main && git push origin upstream/main:main
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
+[include]
+	path = ~/.gitconfig.local
